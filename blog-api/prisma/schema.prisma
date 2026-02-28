@@ -10,7 +10,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -37,8 +36,8 @@ model Comment {
   idComment   Int      @id @default(autoincrement())
   commentPost String
   timeStamp   DateTime @default(now())
-  idUser      Int
+  idUser      Int?
   idBlog      Int
-  user        User     @relation(fields: [idUser], references: [idUser])
+  user        User?    @relation(fields: [idUser], references: [idUser])
   blog        BlogPost @relation(fields: [idBlog], references: [idBlog])
 }

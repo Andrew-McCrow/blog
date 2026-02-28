@@ -80,8 +80,7 @@ const postUpdateValidators = [
 const commentCreateValidators = [
   body("commentPost").notEmpty().withMessage("Comment content is required"),
   body("idUser")
-    .notEmpty()
-    .withMessage("idUser is required")
+    .optional({ nullable: true })
     .isInt({ min: 1 })
     .withMessage("idUser must be a positive integer"),
   body("idBlog")

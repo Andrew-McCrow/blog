@@ -17,7 +17,7 @@ const getCommentById = asyncHandler(async (req, res) => {
 const createComment = asyncHandler(async (req, res) => {
   const { commentPost, idUser, idBlog } = req.body;
   const comment = await prisma.comment.create({
-    data: { commentPost, idUser, idBlog },
+    data: { commentPost, idBlog, ...(idUser ? { idUser } : {}) },
   });
   res.status(201).json(comment);
 });
