@@ -1,0 +1,163 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #f4f6f9;
+  color: #1a1a2e;
+  line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* ── Page layout ── */
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* ── Header ── */
+.site-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.site-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0 0 0.25rem;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+/* ── Posts container ── */
+.posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Post card ── */
+.post-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.75rem 2rem;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.07),
+    0 4px 12px rgba(0, 0, 0, 0.05);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  border: 1px solid #e8ecf3;
+  cursor: pointer;
+  user-select: none;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.09),
+    0 12px 24px rgba(0, 0, 0, 0.07);
+}
+
+/* ── Post meta row ── */
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-meta time {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Badges ── */
+.badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.badge-published {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.badge-draft {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+/* ── Post content ── */
+.post-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+  color: #1e293b;
+}
+
+.post-body {
+  margin: 0 0 1.25rem;
+  color: #475569;
+  font-size: 0.97rem;
+}
+
+.post-body--clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Post footer ── */
+.post-footer {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  text-align: right;
+  margin-top: 0.5rem;
+}
+
+.read-toggle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6366f1;
+  letter-spacing: 0.3px;
+}
+
+/* ── State messages ── */
+.state-msg {
+  text-align: center;
+  color: #64748b;
+  font-size: 1rem;
+  padding: 3rem 0;
+}
+
+.state-msg.error {
+  color: #dc2626;
+}
