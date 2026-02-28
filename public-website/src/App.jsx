@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const POSTS_URL = import.meta.env.VITE_POSTS_URL;
 const COMMENTS_URL = import.meta.env.VITE_COMMENTS_URL;
 const BEARER_TOKEN = import.meta.env.VITE_BEARER_TOKEN;
 
@@ -125,7 +125,7 @@ function App() {
 
   useEffect(() => {
     Promise.all([
-      fetch(API_URL).then((res) => {
+      fetch(POSTS_URL).then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       }),
@@ -165,9 +165,11 @@ function App() {
         {error && (
           <p className="state-msg error">Failed to load posts: {error}</p>
         )}
-        {!loading && !error && posts.filter((p) => p.isPublished).length === 0 && (
-          <p className="state-msg">No posts found.</p>
-        )}
+        {!loading &&
+          !error &&
+          posts.filter((p) => p.isPublished).length === 0 && (
+            <p className="state-msg">No posts found.</p>
+          )}
         {posts
           .filter((post) => post.isPublished)
           .map((post) => (
