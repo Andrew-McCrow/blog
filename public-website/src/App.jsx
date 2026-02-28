@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
+const COMMENTS_URL = import.meta.env.VITE_COMMENTS_URL;
 const BEARER_TOKEN = import.meta.env.VITE_BEARER_TOKEN;
 
 function formatDate(iso) {
@@ -12,13 +13,49 @@ function formatDate(iso) {
   });
 }
 
-function PostCard({ post }) {
+function PostCard({ post, comments, onCommentAdded }) {
   const [expanded, setExpanded] = useState(false);
+  const [commentText, setCommentText] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+
+  const postComments = comments.filter((c) => c.idBlog === post.idBlog);
+
+  function handleToggle(e) {
+    // Prevent toggle when interacting with comment form
+    if (e.target.closest(".comments-section")) return;
+    setExpanded((prev) => !prev);
+  }
+
+  async function handleCommentSubmit(e) {
+    e.preventDefault();
+    if (!commentText.trim()) return;
+    setSubmitting(true);
+    setSubmitError(null);
+    try {
+      const res = await fetch(COMMENTS_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(BEARER_TOKEN ? { Authorization: `Bearer ${BEARER_TOKEN}` } : {}),
+        },
+        body: JSON.stringify({ commentPost: commentText, idBlog: post.idBlog }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const newComment = await res.json();
+      onCommentAdded(newComment);
+      setCommentText("");
+    } catch (err) {
+      setSubmitError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <article
       className={`post-card${expanded ? " post-card--expanded" : ""}`}
-      onClick={() => setExpanded((prev) => !prev)}
+      onClick={handleToggle}
       role="button"
       aria-expanded={expanded}
     >
@@ -34,23 +71,72 @@ function PostCard({ post }) {
           {expanded ? "Show less ▲" : "Read more ▼"}
         </span>
       </footer>
+
+      {expanded && (
+        <div className="comments-section" onClick={(e) => e.stopPropagation()}>
+          <h3 className="comments-heading">
+            {postComments.length === 0
+              ? "No comments yet"
+              : `${postComments.length} comment${postComments.length !== 1 ? "s" : ""}`}
+          </h3>
+          {postComments.length > 0 && (
+            <ul className="comments-list">
+              {postComments.map((c) => (
+                <li key={c.idComment} className="comment">
+                  <p className="comment-body">{c.commentPost}</p>
+                  <time className="comment-time" dateTime={c.timeStamp}>
+                    {formatDate(c.timeStamp)}
+                  </time>
+                </li>
+              ))}
+            </ul>
+          )}
+          <form className="comment-form" onSubmit={handleCommentSubmit}>
+            <textarea
+              className="comment-input"
+              placeholder="Leave a comment…"
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+              rows={3}
+              disabled={submitting}
+            />
+            {submitError && (
+              <p className="comment-error">Failed to post: {submitError}</p>
+            )}
+            <button
+              className="comment-submit"
+              type="submit"
+              disabled={submitting || !commentText.trim()}
+            >
+              {submitting ? "Posting…" : "Post comment"}
+            </button>
+          </form>
+        </div>
+      )}
     </article>
   );
 }
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(API_URL)
-      .then((res) => {
+    Promise.all([
+      fetch(API_URL).then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
-      })
-      .then((data) => {
-        setPosts(data);
+      }),
+      fetch(COMMENTS_URL).then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      }),
+    ])
+      .then(([postsData, commentsData]) => {
+        setPosts(postsData);
+        setComments(commentsData);
         setLoading(false);
       })
       .catch((err) => {
@@ -58,6 +144,10 @@ function App() {
         setLoading(false);
       });
   }, []);
+
+  function handleCommentAdded(newComment) {
+    setComments((prev) => [...prev, newComment]);
+  }
 
   return (
     <div className="page">
@@ -81,7 +171,12 @@ function App() {
         {posts
           .filter((post) => post.isPublished)
           .map((post) => (
-            <PostCard key={post.idBlog} post={post} />
+            <PostCard
+              key={post.idBlog}
+              post={post}
+              comments={comments}
+              onCommentAdded={handleCommentAdded}
+            />
           ))}
       </main>
     </div>
