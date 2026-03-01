@@ -21,6 +21,7 @@ export default function LoginPage() {
     <div className="login-page">
       <form className="login-form" onSubmit={handleSubmit}>
         <h1>Blog Admin</h1>
+        <p>User: test-admin-true@example.com PW: 123456</p>
         {authError && <p className="error">{authError}</p>}
         <label>
           Email
