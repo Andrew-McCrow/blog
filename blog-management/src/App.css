@@ -1,42 +1,157 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Reset & base */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #f4f5f7;
+  color: #1a1a2e;
+  min-height: 100vh;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  height: 56px;
+  background: #1a1a2e;
+  color: #fff;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.navbar-brand { font-weight: 700; font-size: 1.1rem; margin-right: auto; }
+.navbar-links { display: flex; gap: 1rem; }
+.navbar-links a { color: #ccc; text-decoration: none; font-size: 0.95rem; }
+.navbar-links a.active,
+.navbar-links a:hover { color: #fff; }
+.navbar-user { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: #aaa; }
+.navbar-user button {
+  background: transparent;
+  border: 1px solid #555;
+  color: #ccc;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.navbar-user button:hover { background: #333; color: #fff; }
+
+/* Login page */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.login-form {
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.login-form h1 { font-size: 1.5rem; text-align: center; }
+
+/* Page content */
+.page-content {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Forms */
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 500;
 }
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  width: 100%;
+}
+input:focus, textarea:focus { outline: none; border-color: #4f8ef7; }
+.checkbox-label { flex-direction: row; align-items: center; gap: 0.5rem; cursor: pointer; }
+.hint { font-size: 0.78rem; font-weight: 400; color: #777; }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Buttons */
+button {
+  padding: 0.45rem 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: #4f8ef7;
+  color: #fff;
+  transition: background 0.15s;
 }
+button:hover { background: #2e6de0; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+button.danger { background: #e05252; }
+button.danger:hover { background: #c43a3a; }
 
-.card {
-  padding: 2em;
+/* Card form (create) */
+.card-form {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
 }
+.card-form h3 { font-size: 1rem; margin-bottom: 0.25rem; }
 
-.read-the-docs {
-  color: #888;
+/* Inline edit row */
+.inline-form {
+  padding: 1rem;
+  background: #f9faff;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
+.form-actions { display: flex; gap: 0.75rem; }
+
+/* Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.data-table th,
+.data-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+.data-table th { background: #f0f1f3; font-weight: 600; font-size: 0.82rem; text-transform: uppercase; color: #555; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: #fafbff; }
+.actions { display: flex; gap: 0.5rem; }
+
+/* State messages */
+.state-msg { text-align: center; padding: 3rem; color: #777; }
+.error { color: #c43a3a; font-size: 0.88rem; }
