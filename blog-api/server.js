@@ -1,11 +1,12 @@
-require("dotenv").config({ path: require("path").resolve(__dirname, ".env") });
+require("dotenv").config();
 const app = require("./app");
 const prisma = require("./src/utils/prisma");
 
 const PORT = process.env.PORT || 3000;
 
+const HOST = process.env.HOST || "localhost";
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:3000`);
+  console.log(`Server running on http://${HOST}:${PORT}`);
 });
 
 process.on("SIGINT", async () => {
