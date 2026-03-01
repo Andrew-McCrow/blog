@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "prisma generate",
     "start": "node server.js",
     "dev": "node --watch server.js",
     "migrate": "prisma migrate dev && prisma generate",
@@ -21,10 +22,9 @@
     "express": "^5.2.1",
     "express-validator": "^7.3.1",
     "jsonwebtoken": "^9.0.3",
-    "pg": "^8.19.0"
+    "pg": "^8.19.0",
+    "prisma": "^7.4.2",
+    "dotenv": "^17.3.1"
   },
-  "devDependencies": {
-    "dotenv": "^17.3.1",
-    "prisma": "^7.4.2"
-  }
+  "devDependencies": {}
 }
