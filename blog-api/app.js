@@ -10,16 +10,9 @@ const app = express();
 app.use(
   cors({
     origin: (origin, callback) => {
-      const allowed = /^http:\/\/localhost(:\d+)?$/;
-      if (
-        !origin ||
-        allowed.test(origin) ||
-        origin === "https://blog-managment-ebon.vercel.app"
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
+      // Allow all origins — posts and comments are public.
+      // JWT on protected routes handles security.
+      callback(null, true);
     },
     credentials: true,
   }),
