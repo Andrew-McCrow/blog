@@ -11,7 +11,12 @@ app.use(
   cors({
     origin: (origin, callback) => {
       // Allow any localhost origin (any port) and non-browser tools (no origin)
-      if (!origin || /^http:\/\/localhost(:\d+)?$/.test(origin)) {
+      const allowed = /^http:\/\/localhost(:\d+)?$/;
+      if (
+        !origin ||
+        allowed.test(origin) ||
+        origin === "https://blog-managment-ebon.vercel.app"
+      ) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
@@ -19,6 +24,7 @@ app.use(
     },
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   }),
 );
 
