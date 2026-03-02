@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
+    "dev": "nodemon server.js",
     "migrate": "prisma migrate deploy",
-    "build": "prisma generate",
+    "build": "prisma generate && prisma migrate deploy",
     "postinstall": "prisma generate"
   },
   "keywords": [],
