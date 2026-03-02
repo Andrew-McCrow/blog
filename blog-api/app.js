@@ -10,7 +10,6 @@ const app = express();
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow any localhost origin (any port) and non-browser tools (no origin)
       const allowed = /^http:\/\/localhost(:\d+)?$/;
       if (
         !origin ||
@@ -22,8 +21,6 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }),
 );
