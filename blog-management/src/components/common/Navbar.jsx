@@ -1,8 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import { useTheme } from "../../context/ThemeContext";
 
 export default function Navbar() {
   const { user, logout } = useAuth();
+  const { theme, toggle } = useTheme();
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -20,6 +22,9 @@ export default function Navbar() {
       </div>
       <div className="navbar-user">
         <span>{user?.email}</span>
+        <button className="theme-toggle" onClick={toggle} title="Toggle theme">
+          {theme === "light" ? "☾" : "☀"}
+        </button>
         <button onClick={handleLogout}>Logout</button>
       </div>
     </nav>

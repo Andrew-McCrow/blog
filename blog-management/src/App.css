@@ -1,40 +1,83 @@
 /* Reset & base */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── Theme variables ── */
+:root {
+  --bg:                 #f4f5f7;
+  --color:              #1a1a2e;
+  --navbar-bg:          #1a1a2e;
+  --navbar-color:       #fff;
+  --navbar-link:        #ccc;
+  --card-bg:            #fff;
+  --card-border:        #ddd;
+  --inline-form-bg:     #f9faff;
+  --table-bg:           #fff;
+  --table-header-bg:    #f0f1f3;
+  --table-header-color: #555;
+  --table-border:       #eee;
+  --table-row-hover:    #fafbff;
+  --input-border:       #ccc;
+  --input-focus:        #4f8ef7;
+  --hint-color:         #777;
+  --state-msg-color:    #777;
+}
+
+[data-theme="dark"] {
+  --bg:                 #12121f;
+  --color:              #dde0ee;
+  --navbar-bg:          #0d0d1a;
+  --navbar-color:       #f0f0f0;
+  --navbar-link:        #888;
+  --card-bg:            #1e1e32;
+  --card-border:        #2e2e4a;
+  --inline-form-bg:     #181828;
+  --table-bg:           #1e1e32;
+  --table-header-bg:    #16162a;
+  --table-header-color: #888;
+  --table-border:       #2a2a42;
+  --table-row-hover:    #252540;
+  --input-border:       #3a3a58;
+  --input-focus:        #6a9ef5;
+  --hint-color:         #666;
+  --state-msg-color:    #666;
+}
+
 body {
   font-family: system-ui, sans-serif;
-  background: #f4f5f7;
-  color: #1a1a2e;
+  background: var(--bg);
+  color: var(--color);
   min-height: 100vh;
 }
 
-/* Navbar */
+/* ── Navbar ── */
 .navbar {
   display: flex;
   align-items: center;
   gap: 1.5rem;
   padding: 0 2rem;
   height: 56px;
-  background: #1a1a2e;
-  color: #fff;
+  background: var(--navbar-bg);
+  color: var(--navbar-color);
 }
 .navbar-brand { font-weight: 700; font-size: 1.1rem; margin-right: auto; }
 .navbar-links { display: flex; gap: 1rem; }
-.navbar-links a { color: #ccc; text-decoration: none; font-size: 0.95rem; }
+.navbar-links a { color: var(--navbar-link); text-decoration: none; font-size: 0.95rem; }
 .navbar-links a.active,
-.navbar-links a:hover { color: #fff; }
-.navbar-user { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: #aaa; }
+.navbar-links a:hover { color: var(--navbar-color); }
+.navbar-user { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: var(--navbar-link); }
 .navbar-user button {
   background: transparent;
   border: 1px solid #555;
-  color: #ccc;
+  color: var(--navbar-link);
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
   cursor: pointer;
 }
-.navbar-user button:hover { background: #333; color: #fff; }
+.navbar-user button:hover { background: #333; color: var(--navbar-color); }
 
-/* Login page */
+.theme-toggle { font-size: 1rem; line-height: 1; }
+
+/* ── Login page ── */
 .login-page {
   display: flex;
   justify-content: center;
@@ -42,10 +85,10 @@ body {
   min-height: 100vh;
 }
 .login-form {
-  background: #fff;
+  background: var(--card-bg);
   padding: 2.5rem;
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
   width: 100%;
   max-width: 380px;
   display: flex;
@@ -54,7 +97,7 @@ body {
 }
 .login-form h1 { font-size: 1.5rem; text-align: center; }
 
-/* Page content */
+/* ── Page content ── */
 .page-content {
   max-width: 1000px;
   margin: 2rem auto;
@@ -67,7 +110,7 @@ body {
   margin-bottom: 1.25rem;
 }
 
-/* Forms */
+/* ── Forms ── */
 label {
   display: flex;
   flex-direction: column;
@@ -80,17 +123,19 @@ input[type="email"],
 input[type="password"],
 textarea {
   padding: 0.5rem 0.7rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--input-border);
   border-radius: 5px;
   font-size: 0.95rem;
   font-family: inherit;
   width: 100%;
+  background: var(--card-bg);
+  color: var(--color);
 }
-input:focus, textarea:focus { outline: none; border-color: #4f8ef7; }
+input:focus, textarea:focus { outline: none; border-color: var(--input-focus); }
 .checkbox-label { flex-direction: row; align-items: center; gap: 0.5rem; cursor: pointer; }
-.hint { font-size: 0.78rem; font-weight: 400; color: #777; }
+.hint { font-size: 0.78rem; font-weight: 400; color: var(--hint-color); }
 
-/* Buttons */
+/* ── Buttons ── */
 button {
   padding: 0.45rem 1.1rem;
   border: none;
@@ -107,10 +152,10 @@ button:disabled { opacity: 0.6; cursor: not-allowed; }
 button.danger { background: #e05252; }
 button.danger:hover { background: #c43a3a; }
 
-/* Card form (create) */
+/* ── Card form (create) ── */
 .card-form {
-  background: #fff;
-  border: 1px solid #ddd;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
@@ -120,10 +165,10 @@ button.danger:hover { background: #c43a3a; }
 }
 .card-form h3 { font-size: 1rem; margin-bottom: 0.25rem; }
 
-/* Inline edit row */
+/* ── Inline edit row ── */
 .inline-form {
   padding: 1rem;
-  background: #f9faff;
+  background: var(--inline-form-bg);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
@@ -131,27 +176,27 @@ button.danger:hover { background: #c43a3a; }
 }
 .form-actions { display: flex; gap: 0.75rem; }
 
-/* Table */
+/* ── Table ── */
 .data-table {
   width: 100%;
   border-collapse: collapse;
-  background: #fff;
+  background: var(--table-bg);
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 .data-table th,
 .data-table td {
   padding: 0.75rem 1rem;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--table-border);
   font-size: 0.9rem;
 }
-.data-table th { background: #f0f1f3; font-weight: 600; font-size: 0.82rem; text-transform: uppercase; color: #555; }
+.data-table th { background: var(--table-header-bg); font-weight: 600; font-size: 0.82rem; text-transform: uppercase; color: var(--table-header-color); }
 .data-table tr:last-child td { border-bottom: none; }
-.data-table tr:hover td { background: #fafbff; }
+.data-table tr:hover td { background: var(--table-row-hover); }
 .actions { display: flex; gap: 0.5rem; }
 
-/* State messages */
-.state-msg { text-align: center; padding: 3rem; color: #777; }
+/* ── State messages ── */
+.state-msg { text-align: center; padding: 3rem; color: var(--state-msg-color); }
 .error { color: #c43a3a; font-size: 0.88rem; }
